@@ -27,11 +27,17 @@ void add_edge(Graph *G, int x, int y)
     }
 }
 
-void print_Graph(Graph G)
+
+
+// add new edge(x,y) to graph
+void add_edge(Graph *G, int x, int y)
 {
-    int i;
-    for (i = 1; i <= G.n; i++)
-        printf("%d %d\n", G.edges[G.m].x, G.edges[G.m].y);
+    if (x >= 1 && y >= 1 && x <= G->n && y <= G->n)
+    {
+        G->edges[G->m].x = x;
+        G->edges[G->m].y = y;
+        G->m ++;
+    }
 }
 
 //========================================
