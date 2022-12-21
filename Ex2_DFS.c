@@ -1,5 +1,5 @@
 /*
-    Using DFS alogorithm for traversing graph
+    Using DFS algorithm for traversing graph
 */
 
 #include <stdio.h>
