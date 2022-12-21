@@ -1,3 +1,7 @@
+/*
+    Using DFS alogorithm for traversing graph
+*/
+
 #include <stdio.h>
 #define Max_Vertices 20
 #define Max_Length 20

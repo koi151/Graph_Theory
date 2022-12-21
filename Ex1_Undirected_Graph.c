@@ -1,3 +1,7 @@
+/*
+    Perform undirected graph with vertice-vertice matrix
+*/
+
 #include <stdio.h>
 #define Max_Vertices 20
 #define Max_Length 20
