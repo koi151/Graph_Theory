@@ -145,7 +145,7 @@ List depth_first_search(Graph G, int x)
 int main ()
 {
     Graph G;
-    freopen("dothi2.txt", "r", stdin);
+    freopen("graph2.txt", "r", stdin);
     int n, m; // n: number of vertices  ,   m: number of edges
     int u, v; // u, v: vertice u, vertice v
 
@@ -164,12 +164,6 @@ int main ()
             printf("%d ", G.A[i][j]);
         printf("\n");
     }
-
-    // List dfs_list;
-    // make_null_list(&dfs_list);
-    // dfs_list = depth_first_search(G, 1);
-    // for (i = 1; i <= dfs_list.size; i++)
-    //     printf("Duyet %d\n", element_at(dfs_list, i));
 
     int mark_dfs[Max_Vertices];
     for (i = 1; i <= G.n; i++)
