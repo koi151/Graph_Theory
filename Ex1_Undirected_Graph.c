@@ -9,7 +9,7 @@ int i,j;
 
 typedef struct {
     int A[Max_Vertices][Max_Vertices];
-    int n;// number of edges
+    int n; // number of edges
 }Graph;
 
 typedef struct {
@@ -79,7 +79,7 @@ List neighbors(Graph G, int x)
 int main ()
 {
     Graph G;
-    freopen("dothi2.txt", "r", stdin);
+    freopen("graph1.txt", "r", stdin);
     int n, m, i, j, k; // n: number of vertices  ,   m: number of edges
     int u, v; // u, v: vertice u, vertice v
 
@@ -105,9 +105,9 @@ int main ()
     for (i = 1; i <= G.n; i++)
     {
         List list = neighbors(G,i);
-        printf("Neighbors(%d) = [", i);
+        printf("Neighbors(%d) = [ ", i);
         for (j = 1; j <= list.size; j++)
-            printf("%d, ", element_at(list,j));
+            printf("%d ", element_at(list,j));
             printf("]\n");
     }
     
