@@ -66,7 +66,6 @@ int Degree(Graph G, int x)
 // Find the list of neighbors of vertice x
 List neighbors(Graph G, int x)
 {
-    int i;
     List L;
     make_null_list(&L);
     for (i = 1; i <= G.n; i++)
@@ -98,8 +97,12 @@ int main ()
     for (int i = 1; i <= G.n; i++)
         printf("degree(%d) = %d\n",i, Degree(G,i));
 
-    List L;
-    make_null_list(&L);
+     for (i = 1; i <= G.n; i++)
+    {
+        for (j = 1; j <= G.n; j ++)
+            printf("%d ", G.A[i][j]);
+        printf("\n");
+    }
     
     printf("List of all neighbors of a specific vertice:\n");
     for (i = 1; i <= G.n; i++)
@@ -111,13 +114,7 @@ int main ()
             printf("]\n");
     }
     
-    // fclose(file);//----------------------------------------------------
-    for (i = 1; i <= G.n; i++)
-    {
-        for (j = 1; j <= G.n; j ++)
-            printf("%d ", G.A[i][j]);
-        printf("\n");
-    }
+   
 
 
     return 0;
