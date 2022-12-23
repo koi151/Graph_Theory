@@ -137,6 +137,43 @@ List breadth_first_search(Graph G, int x)
     return bfs;
 }
 
+List breadth_first_search_2(Graph G, int x, int parent[])
+{
+    List bfs;
+    make_null_list(&bfs);
+    Queue Q;
+    make_null_queue(&Q);
+    push_Queue(&Q, x);
+    parent[x] = 0;
+
+    int mark[Max_Vertices];
+    int i;
+    for (i = 1; i <= G.n; i++)
+        mark[i] = 0;
+
+    while (!empty_Queue(Q))
+    {
+        int u = top_Queue(Q);
+        pop_Queue(&Q);
+        if (mark[u]) continue;
+        push_back(&bfs, u);
+        mark[u] = 1;
+        
+
+        List nei = neighbors(G, u);
+        for (i = 1; i <= nei.size; i++)
+        {
+            int v = element_at(nei, i);
+            if (!mark[v])
+            {
+                if (parent[v] == -1) parent[v] = u;
+                push_Queue(&Q, v);
+            }
+        }
+    }
+    return bfs;
+}
+
 //====================================================
 int main ()
 {
@@ -160,9 +197,12 @@ int main ()
         printf("\n");
     }
 
-    int mark_bfs[Max_Elements];
+    int mark_bfs[Max_Elements], parent[Max_Vertices];
     for (i = 1; i <= n; i++)
+    {
         mark_bfs[i] = 0;
+        parent[i] = -1;
+    }
 
     printf("\nTraversing elements with BFS:\n");
     for (i = 1; i <= n; i++)
@@ -178,6 +218,27 @@ int main ()
         }    
     }
     
+    for (i = 1; i <= n; i++)
+        mark_bfs[i] = 0;
+    printf("\n");
+
+    for (i = 1; i <= n; i++)
+    {
+        if (!mark_bfs[i])
+        {
+            List bfs_list = breadth_first_search_2(G, i, parent);
+            for (j = 1; j <= bfs_list.size; j++)
+            {
+                // printf("Traversed: %d\n", element_at(bfs_list, j));
+                mark_bfs[element_at(bfs_list, j)] = 1;
+            }
+        }    
+    }
+
+    for(i = 1; i <= n; i++)
+        printf("parent[%d] = %d\n", i, parent[i]);
+
+
 
     return 0;
 }
