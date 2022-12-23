@@ -94,7 +94,7 @@ int Degree(Graph G, int x)
 {
     int deg = 0;
     for(i = 1; i <= G.n; i++)
-        if (G.A[x][i] == 1) ++deg;
+        if (G.A[x][i]) ++deg;
     return deg;
 }
 
@@ -103,7 +103,7 @@ List neighbors(Graph G, int x)
     List L;
     make_null_list(&L);
     for (i = 1; i <= G.n; i++)
-        if (G.A[i][x] == 1)
+        if (G.A[i][x])
             push_back(&L, i);
     return L;
 }
@@ -116,7 +116,6 @@ List depth_first_search(Graph G, int x)
     make_null_stack(&S);
     push_stack(&S, x);
     int mark[Max_Vertices];
-    int n = 0;
 
     for (i = 1; i <= G.n; i++)
         mark[i] = 0;
@@ -141,6 +140,7 @@ List depth_first_search(Graph G, int x)
     return dfs;
 }
 
+
 //=========================================
 int main ()
 {
@@ -152,7 +152,7 @@ int main ()
     scanf("%d%d", &n, &m);
     init_Graph(&G, n);
 
-    for (k = 1; k <= m; k++)
+    for (i = 1; i <= m; i++)
     {
         scanf("%d%d", &u, &v);
         add_Edge(&G, u, v);
@@ -169,7 +169,7 @@ int main ()
     for (i = 1; i <= G.n; i++)
         mark_dfs[i] = 0;
 
-    printf("Elements in DFS list:\n");
+    printf("Elements in DFS traversal:\n");
     for (i = 1; i <= G.n; i++)
     {
         if (!mark_dfs[i])
