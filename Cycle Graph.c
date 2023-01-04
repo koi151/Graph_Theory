@@ -4,7 +4,7 @@
 #define WHITE 0 
 #define BLACK 1
 #define GRAY 2
-int has_cycle = 0;
+
 
 typedef struct {
     int A[Max_Vertices][Max_Vertices];
@@ -72,7 +72,10 @@ List neighbors(Graph G, int x)
     return L;
 }
 
-void DFS(Graph G, int u, int color[])
+int color[Max_Vertices];
+int has_cycle = 0;
+
+void DFS(Graph G, int u)
 {
     int i;
     color[u] = GRAY;
@@ -82,12 +85,12 @@ void DFS(Graph G, int u, int color[])
     {
         int v = Nei.data[i];
         if (color[v] == WHITE)
-            DFS(G,v, color);
+            DFS(G,v);
         else if (color[v] == GRAY)
         {
             has_cycle = 1;
             return;
-        } else continue;
+        }
     }
     color[u] = BLACK;
 }
@@ -107,13 +110,11 @@ int main ()
         add_Edge(&G, u, v);
     }    
 
-    int color[Max_Vertices];
     for (i = 1; i <= G.n; i++)
         color[i] = 0;
 
-    DFS(G, 3, color);
-    if (has_cycle) printf("Graph contain cycle");
+    DFS(G, 3);
+    if (has_cycle) printf("Graph cycled");
     else printf("Graph does not contain cycle");
-
     return 0;
 }
