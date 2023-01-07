@@ -49,6 +49,18 @@ int connected(Graph G)
     return 1;
 }
 
+int count_connected(Graph G)
+{
+    int cnt = 0, i;
+    for (i = 1; i <= G.n; i++)
+        if (!mark[i])
+        {
+            DFS(G, i);
+            ++cnt;
+        }
+    return cnt;
+}
+
 //============================================
 int main ()
 {
@@ -67,6 +79,7 @@ int main ()
     for (i = 1; i <= n; i++)
         mark[i] = 0;
     
-    connected(G) ? printf("CONNECTED") : printf("DISCONNECTED");
+    connected(G) ? printf("GRAPH CONNECTED") : printf("GRAPH DISCONNECTED");
+    // printf("\nNumber of connected parts in the graph: %d", count_connected(G));
     return 0;
 }
