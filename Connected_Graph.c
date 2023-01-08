@@ -61,6 +61,19 @@ int count_connected(Graph G)
     return cnt;
 }
 
+int highest_degree_in_connected_part(Graph G)
+{
+    int i, cnt_vertices = 0, highest_deg = 0;
+    for (i = 1; i <= G.n; i++)
+        if (!mark[i])
+        {
+            DFS(G, i);
+            if (highest_deg < cnt_vertices)
+                highest_deg = cnt_vertices;
+            cnt_vertices = 0;
+        }
+}
+
 //============================================
 int main ()
 {
@@ -80,6 +93,8 @@ int main ()
         mark[i] = 0;
     
     connected(G) ? printf("GRAPH CONNECTED") : printf("GRAPH DISCONNECTED");
-    // printf("\nNumber of connected parts in the graph: %d", count_connected(G));
+    printf("\nNumber of connected parts in the graph: %d\n", count_connected(G));
+    printf("Highest degree in the connected part of graph: %d", highest_degree_in_connected_part(G));
+    
     return 0;
 }
