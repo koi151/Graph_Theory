@@ -30,20 +30,17 @@ int dis[Max_Vertices][Max_Vertices], next[Max_Vertices][Max_Vertices];
 void Floyd_Warshall(Graph *G)
 {
     int i, j, k;
+            
     for (i = 1; i <= G->n; i++)
-        for (j = 1; j <= G->n; j++)
-        {
-            dis[i][j] = INF;
-            next[i][j] = -1;
-        }
-
-    for (i = 1; i <= G->n; i++)
+    {
         dis[i][i] = 0;
-    
-    for (i = 1; i <= G->n; i++)
         for (j = 1; j <= G->n; j++)
             if (G->A[i][j] != NO_EDGE)
+            {
                 dis[i][j] = G->A[i][j];
+                next[i][j] = j;
+            }
+    }
 
     for (i = 1; i <= G->n; i++)
     {
@@ -52,7 +49,7 @@ void Floyd_Warshall(Graph *G)
             if (dis[j][i] == INF) continue;
             for (k = 1; k <= G->n; k++)
             {
-                if (dis[j][k] == INF) continue;
+                if (dis[i][k] == INF) continue;
                 if (dis[j][i] + dis[i][k] < dis[j][k])
                 {
                     dis[j][k] = dis[j][i] + dis[i][k];
@@ -89,6 +86,13 @@ int main ()
         scanf("%d %d %d", &u, &v, &w);
         add_edge(&G, u, v, w);
     }
+
+    for (i = 1; i <= n; i++)
+        for (j = 1; j <= n; j++)
+        {
+            dis[i][j] = INF;
+            next[i][j] = -1;
+        }
 
     printf("\nThe distance between all edges:\n");
     Floyd_Warshall(&G);
