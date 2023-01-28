@@ -1,140 +1,71 @@
 #include <stdio.h>
-#define Max_length 100
+
+#define Max_Elements 100
 #define Max_Vertices 100
-typedef struct{
+#define NO_EDGE -999
+
+typedef struct {
     int A[Max_Vertices][Max_Vertices];
-    int n;
+    int n, m;
 }Graph;
 
 typedef struct {
-    int data[Max_length];
+    int data[Max_Elements];
     int size;
-}List;
-
-//---------------------------------List-----------------------------
-
-void make_null_list(List *L)
+}Stack;
+//---------------------------GRAPH------------------------------------
+void init_graph(Graph *G, int n)
 {
-    L->size = 0;
-}
-
-int element_at(List L, int pos)
-{
-    return L.data[pos-1];
-}
-
-void push_back(List *L, int x)
-{
-    L->data[L->size] = x;
-    L->size ++; 
-}
-
-//-------------------------Graph-----------------------
-
-void init_Graph(Graph *G, int n)
-{
-    int i, j;
+    G->m = 0;
     G->n = n;
-    for (i = 1; i <= G->n; i++)
-        for (j = 1; j <= G->n; j++)
-            G->A[i][j] = 0;
+    int i, j;
+    for (i = 1; i <= n; i++)
+        for (j = 1; j <= n; j++)
+            G->A[i][j] = NO_EDGE;
 }
 
-void add_Edges(Graph *G, int x, int y)
+void add_edge(Graph *G, int x, int y)
 {
     G->A[x][y] = 1;
-    G->A[y][x] = 1;
+    G->m ++;
 }
 
 int adjacent(Graph *G, int x, int y)
 {
-    return G->A[x][y] != 0;
+    return G->A[x][y] == 1;
 }
-
-int degree(Graph G, int x)
+//------------------------------GLOBAL VARIABLES-----------------------
+int mark[Max_Vertices];
+//---------------------------------------------------------------------
+void DFS(Graph *G, int s)
 {
-    int i, deg = 0;
-    for (i = 1; i <= G.n; i++)
-        if (G.A[x][i]) ++deg;
-    return deg; 
-}
-
-List neighbors(Graph G, int x)
-{
+    if (mark[s]) return;
+    mark[s] = 1;
+    printf("%d\n", s);
     int i;
-    List L;
-    make_null_list(&L);
-    for (i = 1; i <= G.n; i++)
-        if (G.A[i][x]) push_back(&L, i);
-    return L;
+    for (i = 1; i <= G->n; i++)
+        if (!mark[i] && adjacent(G, s, i))
+            DFS(G, i);
 }
-
-int mark[Max_Vertices], parent[Max_Vertices];
-// void DFS_Recursion(Graph G, int x)
-// {
-//     if (mark[x]) return;
-//     printf("Traversed: %d\n", x);
-//     mark[x] = 1;
-//     List nei = neighbors(G, x);
-//     int i;
-//     for (i = 1; i <= nei.size; i++)
-//         DFS_Recursion(G, element_at(nei, i));
-// }
-
-void DFS_Recursion_2(Graph G, int x, int p)
-{
-    if (mark[x]) return;
-    // printf("Traversed: %d\n", x);
-    mark[x] = 1;
-    parent[x] = p;
-    List nei = neighbors(G, x);
-    int i;
-    for (i = 1; i <= nei.size; i++)
-        DFS_Recursion_2(G, element_at(nei, i), x);
-}
-
-//====================================================
+//====================================================================
 int main ()
 {
-    freopen("graph2.2.txt", "r", stdin);
+    int n, m, u, v, i;
     Graph G;
-    int n, m, i, j, u, v;
 
-    scanf("%d%d", &n, &m);
-    init_Graph(&G, n);
+    scanf("%d %d", &n, &m);
+    init_graph(&G, n);
     for (i = 1; i <= m; i++)
     {
-        scanf("%d%d", &u, &v);
-        add_Edges(&G, u, v);
+        scanf("%d %d", &u, &v);
+        add_edge(&G, u, v);
     }
 
     for (i = 1; i <= n; i++)
-        {
-        for (j = 1; j <= n; j ++)
-            printf("%d ", G.A[i][j]);
-            printf("\n");
-        }
-
-    for (i = 1; i <= n; i++)
-    {
         mark[i] = 0;
-        parent[i] = -1;
-    }
-
-    // DFS_Recursion(G, 1);
-
-    for (i = 1; i <= n; i++)
-        if (!mark[i])
-            DFS_Recursion_2(G, i, 0);
-
-    for (i = 1; i <= n; i++)
-            printf("%d %d\n", i, parent[i]);
-
     
-
-    
-  
-
+    for (i = 1; i <= n; i++)
+        if (!mark[i]) DFS(&G, i);
 
     return 0;
 }
