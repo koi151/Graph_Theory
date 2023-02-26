@@ -79,18 +79,9 @@ int find_root(int x)
     return x;
 }
 
-void print_tree (Graph G)
-{
-    printf("**********\n");
-    int i;
-    for (i = 0; i < G.m; i++)
-        printf("%d %d %d\n", G.edges[i].u, G.edges[i].v, G.edges[i].w);
-}
-
 int Krusal(Graph *G, Graph *pG)
 {  
     Insertion_sort(G);
-    print_tree(*G);
     int i;
     init_graph(pG, G->n);
 
