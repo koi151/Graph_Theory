@@ -94,7 +94,8 @@ void breadth_first_search(Graph G, int x, int p)
 //==============================================
 int main ()
 {
-    freopen("graph3.txt", "r", stdin);
+    // freopen("graph3.txt", "r", stdin);
+    freopen("test2.txt", "r", stdin);
     int n, m, u, v, i;
     Graph G;
 
@@ -123,3 +124,71 @@ int main ()
     
     return 0;
 }
+/* ---- Short Version -----
+#include <stdio.h>
+
+#define Max_Vertices 100
+#define INF 999999
+
+int mark[Max_Vertices] = {0};
+
+typedef struct {
+    int A[Max_Vertices][Max_Vertices];
+    int n, m;
+}Graph;
+
+void init_graph(Graph *G, int n)
+{
+    G->m = 0;
+    G->n = n;
+    int i, j;
+    for (i = 1; i <= n; i++)
+        for (j = 1; j <= n; j++)
+            G->A[i][j] = INF;
+}
+
+void add_edge(Graph *G, int x, int y)
+{
+    G->A[x][y] ++;
+    G->A[y][x] ++;
+    G->m ++;
+}
+
+void BFS (Graph *G, int s)
+{
+    int queue[Max_Vertices], front = 0, rear = 0;
+    queue[rear++] = s;
+
+    int i, u;
+    while (front < rear)
+    {
+        u = queue[front++];
+
+        if (mark[u]) continue;
+        mark[u] = 1;
+        printf("%d\n", u);
+        for (i = 1; i <= G->n; i++)
+            if (!mark[i] && G->A[u][i] != INF)
+                queue[rear++] = i;
+    }
+}
+//==============================
+int main ()
+{
+    int n, m, u, v, i;
+    Graph G;
+
+    scanf("%d %d", &n, &m);
+    init_graph(&G, n);
+    for (i = 1; i <= m; i++)
+    {
+        scanf("%d %d", &u, &v);
+        add_edge(&G, u, v);
+    }
+
+    for (i = 1; i <= G.n; i++)
+        if (!mark[i]) BFS(&G, i);
+        
+    return 0;
+}
+*/
