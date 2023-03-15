@@ -134,3 +134,95 @@ int main ()
 
     return 0;
 }
+
+/* --- SHORT VERSION ---
+#include <stdio.h>
+#include <math.h>
+
+#define Max_Vertices 100
+#define NO_EDGE 0
+
+typedef struct {
+    int A[Max_Vertices][Max_Vertices];
+    int n, m;
+}Graph;
+
+void init_graph(Graph *G, int n)
+{
+    G->m = 0;
+    G->n = n;
+    int i, j;
+    for (i = 1; i <= n; i++)
+        for (j = 1; j <= n; j++)
+            G->A[i][j] = NO_EDGE;
+}
+
+void add_edge(Graph *G, int x, int y, int type)
+{
+    G->A[x][y] ++;
+    G->m ++;  
+    if (type == 2) G->A[y][x] ++;
+}
+
+int min_num[Max_Vertices], num[Max_Vertices], on_stack[Max_Vertices];
+int k = 0, cnt = 0;
+int stack[Max_Vertices], size = 0;
+
+void SCC(Graph *G, int s)
+{
+    min_num[s] = num[s] = k++;
+    on_stack[s] = 1;
+    stack[size++] = s;
+
+    int i;
+    for (i = 1; i <= G->n; i++)
+        if (G->A[s][i])
+        {
+            if (num[i] == -1)
+            {
+                SCC(G, i);
+                min_num[s] = fmin(min_num[s], min_num[i]);
+            }
+            if (on_stack[i])
+                min_num[s] = fmin(min_num[s], num[i]);
+        }
+
+    if (num[s] == min_num[s])
+    {
+        cnt ++;
+        int temp;
+        do {
+            temp = stack[size--];
+            on_stack[s] = 0;
+        } while (temp != s);
+    }
+}
+//======================================
+int main ()
+{
+    Graph G;
+    int n, m, u, v, type, i;
+    
+    scanf("%d %d", &n, &m);
+    init_graph(&G, n);
+    for (i = 1; i <= m; i++)
+    {
+       scanf("%d %d %d", &u, &v, &type);
+       add_edge(&G, u, v, type);
+    }
+
+    for (i = 1; i <= G.n; i++)
+    {
+        on_stack[i] = 0;
+        num[i] = min_num[i] = -1;
+    }
+
+    for (i = 1; i <= G.n; i++)
+        if (num[i] == -1) SCC(&G, i);
+
+    printf(cnt == 1 ? "OKIE" : "NO");
+
+    return 0;
+}
+
+*/
